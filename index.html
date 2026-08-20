@@ -608,7 +608,10 @@
                 <div class="bg-white rounded-3xl shadow-sm border border-slate-200 flex flex-col flex-1 overflow-hidden">
                     <div class="overflow-x-auto flex-1 relative">
                         <div id="mutasiAlert" class="absolute top-0 left-0 right-0 bg-amber-100 text-amber-800 text-[10px] font-bold text-center py-1.5 border-b border-amber-200 hidden z-30 uppercase tracking-widest">Perubahan belum disimpan! Pastikan mengisi Fisik Real & Klik Submit.</div>
-                        <div id="mutasiLockedAlert" class="absolute top-0 left-0 right-0 bg-rose-100 text-rose-700 text-[10px] font-bold text-center py-1.5 border-b border-rose-200 hidden z-30 uppercase tracking-widest"><i class="fas fa-lock mr-1"></i> Data hari ini sudah disubmit. Hubungi Manager untuk perubahan.</div>
+                        <div id="mutasiLockedAlert" class="absolute top-0 left-0 right-0 bg-rose-100 text-rose-700 text-[10px] font-bold text-center py-1.5 border-b border-rose-200 hidden z-30 uppercase tracking-widest flex flex-col sm:flex-row items-center justify-center sm:space-x-4 space-y-2 sm:space-y-0">
+                            <span><i class="fas fa-lock mr-1"></i> Data hari ini sudah disubmit.</span>
+                            <button id="btnAjukanBuka" onclick="ajukanBukaKunci()" class="bg-rose-500 text-white px-3 py-1 rounded-md shadow-sm hover:bg-rose-600 transition flex items-center space-x-1"><i class="fas fa-key text-[9px]"></i><span>Ajukan Buka Kunci</span></button>
+                        </div>
                         
                         <table class="w-full text-left text-xs relative">
                             <thead class="bg-slate-50 text-slate-500 text-[9px] uppercase font-black tracking-widest sticky top-0 z-20 shadow-sm">
@@ -632,6 +635,7 @@
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
                     <h3 class="text-base font-black text-slate-800 flex items-center space-x-2"><i class="fas fa-clipboard-list text-amber-500"></i><span>Rekap Mutasi Karyawan</span></h3>
                     <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+                        <button id="btnBukaKunciManager" onclick="bukaKunciMutasiManager()" class="px-4 py-2.5 bg-rose-50 border border-rose-200 text-rose-600 hover:bg-rose-500 hover:text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition hidden whitespace-nowrap"><i class="fas fa-unlock mr-2"></i>Buka Kunci PIC Ini</button>
                         <div class="flex items-center space-x-3 bg-slate-50 px-4 py-2.5 rounded-2xl border border-slate-100 w-full sm:w-auto">
                             <i class="fas fa-user-tag text-slate-400"></i>
                             <select id="filterPicMutasiManager" onchange="renderManagerMutasi()" class="bg-transparent text-xs font-black text-slate-700 outline-none uppercase tracking-wider">
@@ -855,13 +859,13 @@
 
         // 👇👇👇 GANTI DENGAN KODE FIREBASE ANDA 👇👇👇
         const firebaseConfig = {
-  apiKey: "AIzaSyCRH_6JZoRvKRgbEU_WNNtSOFZ2d83kfys",
-  authDomain: "bebek-emas.firebaseapp.com",
-  projectId: "bebek-emas",
-  storageBucket: "bebek-emas.firebasestorage.app",
-  messagingSenderId: "50335358089",
-  appId: "1:50335358089:web:4cdae41ba35803c5f53a58"
-};
+          apiKey: "AIzaSyCRH_6JZoRvKRgbEU_WNNtSOFZ2d83kfys",
+          authDomain: "bebek-emas.firebaseapp.com",
+          projectId: "bebek-emas",
+          storageBucket: "bebek-emas.firebasestorage.app",
+          messagingSenderId: "50335358089",
+          appId: "1:50335358089:web:4cdae41ba35803c5f53a58"
+        };
         // 👆👆👆 ========================================= 👆👆👆
 
         const app = initializeApp(firebaseConfig);
@@ -872,7 +876,7 @@
         const getDocRef = (colName, docId) => doc(db, 'artifacts', appId, 'public', 'data', colName, docId);
 
         let currentUser = null;
-        let accountsDB = [], menusDB = [], stocksDB = [], transactionsDB = [], expensesDB = [], mutasiDB = [], closeRegistersDB = [], savedBillsDB = [];
+        let accountsDB = [], menusDB = [], stocksDB = [], transactionsDB = [], expensesDB = [], mutasiDB = [], closeRegistersDB = [], savedBillsDB = [], requestsDB = [];
         let cart = [], tipeOrder = 'DineIn', isCloudReady = false;
         let discountInfo = { type: '%', value: 0, amount: 0 }; 
         let subtotalCart = 0;
@@ -918,11 +922,12 @@
                     if(col === 'transactions') { transactionsDB = data; if(currentUser && ['kasir','admin'].includes(currentUser.role)) { if(!document.getElementById('view-laporan').classList.contains('hidden')) renderLaporanUI(); } }
                     if(col === 'expenses') { expensesDB = data; if(currentUser && ['kasir','admin'].includes(currentUser.role)) { if(!document.getElementById('view-pengeluaran').classList.contains('hidden')) renderPengeluaranUI(); } }
                     if(col === 'close_registers') { closeRegistersDB = data; if(currentUser && currentUser.role === 'admin' && !document.getElementById('view-tutupbuku').classList.contains('hidden')) renderManagerTutupBuku(); }
-                    if(col === 'stock_mutations') { mutasiDB = data; if(currentUser && currentUser.role === 'admin' && !document.getElementById('view-mutasistok').classList.contains('hidden')) renderManagerMutasi(); }
+                    if(col === 'stock_mutations') { mutasiDB = data; if(currentUser && currentUser.role === 'admin' && !document.getElementById('view-mutasistok').classList.contains('hidden')) renderManagerMutasi(); if(currentUser && currentUser.role !== 'admin' && !document.getElementById('view-mutasistok').classList.contains('hidden')) loadMutasiDataUI(); }
                     if(col === 'saved_bills') { savedBillsDB = data; if(currentUser && ['kasir','admin'].includes(currentUser.role)){ document.getElementById('badgeSavedBills').innerText = data.length; document.getElementById('badgeSavedBills').classList.toggle('hidden', data.length === 0); if(!document.getElementById('view-notatersimpan').classList.contains('hidden')) renderSavedBillsUI(); } }
+                    if(col === 'requests') { requestsDB = data; if(currentUser && currentUser.role === 'admin' && !document.getElementById('view-dashboard').classList.contains('hidden')) renderManagerDashboard(); if(currentUser && currentUser.role !== 'admin' && !document.getElementById('view-mutasistok').classList.contains('hidden')) loadMutasiDataUI(); }
                 }, err => console.error(err));
             };
-            handleSync('accounts'); handleSync('menus'); handleSync('stocks'); handleSync('transactions'); handleSync('expenses'); handleSync('close_registers'); handleSync('stock_mutations'); handleSync('saved_bills');
+            handleSync('accounts'); handleSync('menus'); handleSync('stocks'); handleSync('transactions'); handleSync('expenses'); handleSync('close_registers'); handleSync('stock_mutations'); handleSync('saved_bills'); handleSync('requests');
         }
 
         window.loginAs = async (username, role) => {
@@ -1356,10 +1361,31 @@
                 
                 const tglFilter = document.getElementById('filterTglMutasi').value; if(!tglFilter) return; 
                 let targetStocks = stocksDB.filter(s => s.role === currentUser.role);
-                const sudahSubmitHariIni = mutasiDB.some(m => m.tanggal === tglFilter && m.role === currentUser.role); 
-                const isLocked = sudahSubmitHariIni; // Karyawan ter-lock jika sudah submit
                 
-                if(isLocked) { document.getElementById('btnSubmitMutasi').classList.add('hidden'); document.getElementById('mutasiLockedAlert').classList.remove('hidden'); } else { document.getElementById('btnSubmitMutasi').classList.remove('hidden'); document.getElementById('mutasiLockedAlert').classList.add('hidden'); }
+                const sudahSubmitHariIni = mutasiDB.some(m => m.tanggal === tglFilter && m.role === currentUser.role); 
+                const isLocked = sudahSubmitHariIni; 
+                const sudahRequest = requestsDB.some(r => r.tanggal === tglFilter && r.role === currentUser.role && r.type === 'unlock_mutasi');
+                
+                if(isLocked) { 
+                    document.getElementById('btnSubmitMutasi').classList.add('hidden'); 
+                    document.getElementById('mutasiLockedAlert').classList.remove('hidden'); 
+                    
+                    const btnAjukan = document.getElementById('btnAjukanBuka');
+                    if(sudahRequest) {
+                        btnAjukan.innerText = "Menunggu Persetujuan Manager...";
+                        btnAjukan.disabled = true;
+                        btnAjukan.classList.add('opacity-50', 'cursor-not-allowed', 'bg-slate-400');
+                        btnAjukan.classList.remove('bg-rose-500', 'hover:bg-rose-600');
+                    } else {
+                        btnAjukan.innerText = "Ajukan Buka Kunci";
+                        btnAjukan.disabled = false;
+                        btnAjukan.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-slate-400');
+                        btnAjukan.classList.add('bg-rose-500', 'hover:bg-rose-600');
+                    }
+                } else { 
+                    document.getElementById('btnSubmitMutasi').classList.remove('hidden'); 
+                    document.getElementById('mutasiLockedAlert').classList.add('hidden'); 
+                }
 
                 // HITUNG PEMAKAIAN KASIR (Hanya transaksi di hari yang sama)
                 let itemTerjualHariIni = {}; 
@@ -1373,10 +1399,6 @@
                     let potongKasir = 0; if(stokItem.menuTerkait) { const menus = stokItem.menuTerkait.split(',').map(m => m.trim().toLowerCase()); for(let terjual in itemTerjualHariIni) { if(menus.includes(terjual)) potongKasir += itemTerjualHariIni[terjual]; } }
                     
                     let dataTersimpan = mutasiDB.find(m => m.tanggal === tglFilter && m.idStok === stokItem.id); 
-                    
-                    // PERBAIKAN LOGIKA DOUBLE DEDUCTION
-                    // Jika mutasi sudah disubmit, sisa kemarin diambil dari database mutasi, dan potongKasir JANGAN dikurangkan lagi jika sudah termasuk.
-                    // Tapi karena mutasi menyimpan 'potongKasir' saat disubmit, kita recalculate 'seharusnya' saja.
                     
                     let sisaKemarin = 0;
                     if (dataTersimpan) {
@@ -1412,6 +1434,18 @@
             if(!auth.currentUser) return; if (mutasiDraftHariIni.some(m => m.fisik === '')) return showToast('Semua kolom FISIK (Kuning) WAJIB diisi!', 'error'); const tglFilter = document.getElementById('filterTglMutasi').value; const isToday = (tglFilter === getTodayYMD());
             window.showModal("Konfirmasi Mutasi", "Data akan disubmit dan tidak dapat diubah lagi hari ini kecuali oleh Manager.", async () => { showLoading("Menyimpan..."); for (let m of mutasiDraftHariIni) { const payload = { tanggal: tglFilter, timestamp: Date.now(), role: currentUser.role, idStok: m.idStok, namaBarang: m.nama, sisaKemarin: m.sisaKemarin, masuk: m.masuk, potongKasir: m.potongKasir, manual: m.manual, rusak: m.rusak, seharusnya: m.seharusnya, fisik: m.fisik, selisih: m.selisih }; if (m.docId) await setDoc(getDocRef('stock_mutations', m.docId), payload, { merge: true }); else await addDoc(getColRef('stock_mutations'), payload); if (isToday) await setDoc(getDocRef('stocks', m.idStok), { stokSaatIni: m.fisik }, { merge: true }); } hideLoading(); showToast("Berhasil Disimpan!", "success"); setTimeout(() => window.loadMutasiDataUI(), 500); });
         };
+        
+        window.ajukanBukaKunci = async () => {
+            const tgl = document.getElementById('filterTglMutasi').value;
+            const exists = requestsDB.some(r => r.tanggal === tgl && r.role === currentUser.role && r.type === 'unlock_mutasi');
+            if (exists) return showToast("Pengajuan sudah dikirim, tunggu Manager!", "info");
+            
+            showLoading("Mengirim Pengajuan...");
+            try {
+                await addDoc(getColRef('requests'), { type: 'unlock_mutasi', role: currentUser.role, tanggal: tgl, timestamp: Date.now() });
+                hideLoading(); showToast("Pengajuan terkirim ke Manager!", "success");
+            } catch (err) { hideLoading(); showToast("Gagal mengirim pengajuan", "error"); }
+        };
 
         window.renderManagerMutasi = () => {
             const tgl = document.getElementById('filterTglMutasiManager').value;
@@ -1420,6 +1454,9 @@
             
             let data = mutasiDB.filter(m => m.tanggal === tgl);
             if (pic !== 'ALL') data = data.filter(m => m.role === pic);
+            
+            const btnBuka = document.getElementById('btnBukaKunciManager');
+            if (pic !== 'ALL' && data.length > 0) { btnBuka.classList.remove('hidden'); } else { btnBuka.classList.add('hidden'); }
             
             if(data.length === 0) {
                 tbl.innerHTML = `<tr><td colspan="10" class="p-8 text-center text-slate-400 font-bold border-b border-dashed border-slate-200"><i class="fas fa-folder-open text-3xl mb-2 opacity-50 block"></i>Belum ada data mutasi yang disubmit.</td></tr>`;
@@ -1441,6 +1478,25 @@
                     <td class="p-3 text-center font-black text-lg ${selisihColor}">${m.selisih}</td>
                     <td class="p-3 text-center"><button onclick="bukaModalEditMutasiManager('${m.id}')" class="w-8 h-8 text-blue-500 hover:text-white hover:bg-blue-500 rounded-xl transition shadow-sm border border-blue-100 flex items-center justify-center mx-auto" title="Koreksi Fisik"><i class="fas fa-edit text-[10px]"></i></button></td>
                 </tr>`;
+            });
+        };
+        
+        window.bukaKunciMutasiManager = () => {
+            const pic = document.getElementById('filterPicMutasiManager').value;
+            const tgl = document.getElementById('filterTglMutasiManager').value;
+            if (pic === 'ALL') return showToast("Pilih Divisi/PIC tertentu dulu!", "error");
+
+            window.showModal("Buka Kunci Mutasi", `Yakin ingin menghapus laporan mutasi ${pic} tanggal ${tgl} agar karyawan bisa input ulang?`, async () => {
+                showLoading("Membuka Kunci...");
+                try {
+                    const mutasiToDelete = mutasiDB.filter(m => m.tanggal === tgl && m.role === pic);
+                    for (let m of mutasiToDelete) { await deleteDoc(getDocRef('stock_mutations', m.id)); }
+                    
+                    const reqToDelete = requestsDB.filter(r => r.tanggal === tgl && r.role === pic && r.type === 'unlock_mutasi');
+                    for (let r of reqToDelete) { await deleteDoc(getDocRef('requests', r.id)); }
+                    
+                    hideLoading(); showToast("Kunci berhasil dibuka!", "success");
+                } catch (e) { console.error(e); hideLoading(); showToast("Gagal membuka kunci", "error"); }
             });
         };
 
@@ -1534,12 +1590,19 @@
             else { sortedMenu.slice(0, 5).forEach((item, index) => { let badge = "bg-slate-100 text-slate-500"; if(index === 0) badge = "bg-amber-100 text-amber-600 shadow-sm border border-amber-200"; else if(index === 1) badge = "bg-slate-200 text-slate-700 shadow-sm border border-slate-300"; else if(index === 2) badge = "bg-orange-100 text-orange-700 shadow-sm border border-orange-200"; topMenuCont.innerHTML += `<div class="flex items-center justify-between p-3 border-b border-slate-50 hover:bg-slate-50 rounded-xl transition"><div class="flex items-center space-x-3"><div class="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-black ${badge}">${index+1}</div><span class="font-bold text-xs text-slate-700">${item[0]}</span></div><span class="font-black text-emerald-600 text-xs">${item[1]} <span class="text-[9px] text-slate-400">Porsi</span></span></div>`; }); }
 
             const remindersCont = document.getElementById('managerRemindersList'); remindersCont.innerHTML = '';
+            
+            // Notifikasi Permintaan Buka Kunci
+            requestsDB.filter(r => r.type === 'unlock_mutasi').forEach(r => { 
+                remindersCont.innerHTML += `<div class="p-3 bg-blue-50 rounded-xl border border-blue-100 flex items-start space-x-3"><i class="fas fa-key text-blue-500 mt-0.5"></i><div><h5 class="text-xs font-black text-blue-700">Permintaan Buka Kunci Mutasi</h5><p class="text-[10px] font-bold text-blue-600 uppercase tracking-widest">Divisi ${r.role.toUpperCase()} meminta akses revisi inputan fisik.</p></div></div>`; 
+            });
+
+            // Notifikasi Stok Tipis
             stocksDB.filter(s => (parseFloat(s.stokSaatIni)||0) <= (parseFloat(s.stokMinimal)||0)).forEach(s => { remindersCont.innerHTML += `<div class="p-3 bg-rose-50 rounded-xl border border-rose-100 flex items-start space-x-3"><i class="fas fa-exclamation-circle text-rose-500 mt-0.5"></i><div><h5 class="text-xs font-black text-rose-700">Stok Kritis: ${s.nama}</h5><p class="text-[10px] font-bold text-rose-500">Sisa ${s.stokSaatIni} ${s.satuan}</p></div></div>`; });
 
+            // Notifikasi Belum Submit
             const todayYMD = getTodayYMD();
             const requiredRoles = [...new Set(stocksDB.map(s => s.role))].filter(r => r !== 'admin' && r !== '');
             const submittedRoles = [...new Set(mutasiDB.filter(m => m.tanggal === todayYMD).map(m => m.role))];
-            
             requiredRoles.forEach(r => { if(!submittedRoles.includes(r)) { remindersCont.innerHTML += `<div class="p-3 bg-amber-50 rounded-xl border border-amber-100 flex items-start space-x-3"><i class="fas fa-clock text-amber-500 mt-0.5"></i><div><h5 class="text-xs font-black text-amber-700">Tugas Belum Selesai</h5><p class="text-[10px] font-bold text-amber-600 uppercase tracking-widest">Tim ${r} belum submit mutasi stok hari ini.</p></div></div>`; } });
 
             if(remindersCont.innerHTML === '') remindersCont.innerHTML = `<div class="p-5 text-center text-slate-400 font-bold bg-slate-50 rounded-2xl border border-slate-100 border-dashed"><i class="fas fa-check-circle text-2xl mb-2 text-emerald-400"></i><br>Tidak ada peringatan. Operasional sempurna!</div>`;
