@@ -12,8 +12,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Pawon Nusantara">
     
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="data:application/manifest+json,{&quot;name&quot;:&quot;Pawon Nusantara POS&quot;,&quot;short_name&quot;:&quot;PawonPOS&quot;,&quot;start_url&quot;:&quot;.&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;#1A1A1A&quot;,&quot;theme_color&quot;:&quot;#1A1A1A&quot;}">
+    <!-- PWA Manifest dengan Injected Icon untuk Force Standalone di Android -->
+    <link rel="manifest" href="data:application/manifest+json,{&quot;name&quot;:&quot;Pawon Nusantara POS&quot;,&quot;short_name&quot;:&quot;PawonPOS&quot;,&quot;start_url&quot;:&quot;./&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;#f4f5f7&quot;,&quot;theme_color&quot;:&quot;#1A1A1A&quot;,&quot;icons&quot;:[{&quot;src&quot;:&quot;data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjEwMCIgZmlsbD0iIzFhMWExYSIvPjxjaXJjbGUgY3g9IjI1NiIgY3k9IjI1NiIgcj0iMTUwIiBmaWxsPSIjZDRhZjM3Ii8+PC9zdmc+&quot;,&quot;sizes&quot;:&quot;512x512&quot;,&quot;type&quot;:&quot;image/svg+xml&quot;,&quot;purpose&quot;:&quot;any maskable&quot;}]}">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -112,7 +112,7 @@
             </div>
             <h3 class="text-lg font-black text-center mb-1">Akses Manager</h3>
             <p class="text-[10px] text-slate-500 text-center mb-5 uppercase tracking-wider font-bold">Otorisasi Dibutuhkan</p>
-            <input type="password" id="inputPassManager" placeholder="Masukkan Password (admin)" class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-200 rounded-xl text-sm font-bold mb-5 outline-none focus:bg-white focus:border-rose-400 transition text-center tracking-widest">
+            <input type="password" id="inputPassManager" placeholder="Masukkan Password Manager" class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-200 rounded-xl text-sm font-bold mb-5 outline-none focus:bg-white focus:border-rose-400 transition text-center tracking-widest">
             <div class="flex space-x-2">
                 <button onclick="document.getElementById('modalManagerPass').classList.add('hidden')" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 font-bold text-xs rounded-xl transition text-slate-600">Batal</button>
                 <button onclick="loginManager()" class="flex-1 py-2.5 bg-rose-500 hover:bg-rose-600 text-white font-black text-xs rounded-xl shadow-md transition transform hover:-translate-y-0.5">Buka Akses</button>
@@ -120,61 +120,61 @@
         </div>
     </div>
 
-    <!-- Header Aplikasi -->
-    <header class="bg-slate-900 text-white px-4 py-3 flex items-center justify-between shadow-md z-30 shrink-0 border-b border-slate-800">
+    <!-- Header Aplikasi (Diperkecil paddingnya di Mobile) -->
+    <header class="bg-slate-900 text-white px-3 py-2 sm:px-4 sm:py-3 flex items-center justify-between shadow-md z-30 shrink-0 border-b border-slate-800">
         <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-xl flex items-center justify-center text-slate-900 text-lg shadow-sm border-2 border-slate-800">
+            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg sm:rounded-xl flex items-center justify-center text-slate-900 text-sm sm:text-lg shadow-sm border border-slate-800">
                 <i class="fas fa-feather-pointed"></i>
             </div>
             <div>
-                <h2 class="text-sm font-black tracking-widest uppercase text-amber-400 leading-none">Pawon Nusantara</h2>
-                <span id="labelUserRole" class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Cloud POS</span>
+                <h2 class="text-xs sm:text-sm font-black tracking-widest uppercase text-amber-400 leading-none">Pawon Nusantara</h2>
+                <span id="labelUserRole" class="text-[9px] sm:text-[10px] text-slate-400 font-bold uppercase tracking-wider">Cloud POS</span>
             </div>
         </div>
-        <div class="flex items-center space-x-3">
-            <div class="flex items-center space-x-1 px-2 py-1.5 bg-emerald-500/10 text-emerald-400 rounded-lg text-[9px] font-black border border-emerald-500/20 tracking-wider">
-                <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div><span>CLOUD AKTIF</span>
+        <div class="flex items-center space-x-2 sm:space-x-3">
+            <div class="flex items-center space-x-1 px-2 py-1 sm:py-1.5 bg-emerald-500/10 text-emerald-400 rounded-lg text-[8px] sm:text-[9px] font-black border border-emerald-500/20 tracking-wider">
+                <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div><span class="hidden sm:inline">CLOUD AKTIF</span>
             </div>
-            <button onclick="logout()" title="Keluar" class="p-2.5 text-rose-400 hover:bg-rose-500/20 hover:text-rose-300 rounded-xl text-sm transition">
+            <button onclick="logout()" title="Keluar" class="p-2 text-rose-400 hover:bg-rose-500/20 hover:text-rose-300 rounded-xl text-sm transition">
                 <i class="fas fa-power-off"></i>
             </button>
         </div>
     </header>
 
-    <!-- Navigasi Tab Utama -->
-    <nav class="bg-white border-b border-slate-200 px-4 flex space-x-2 overflow-x-auto no-scrollbar shrink-0 text-[10px] uppercase font-black tracking-wider text-slate-500 z-20 shadow-sm">
-        <button id="tab-dashboard" onclick="switchTab('dashboard')" class="tab-btn hidden px-4 py-4 border-b-2 border-transparent hover:text-amber-600 flex items-center space-x-2 whitespace-nowrap transition">
+    <!-- Navigasi Tab Utama (Diperkecil paddingnya di Mobile) -->
+    <nav class="bg-white border-b border-slate-200 px-2 sm:px-4 flex space-x-1 sm:space-x-2 overflow-x-auto no-scrollbar shrink-0 text-[9px] sm:text-[10px] uppercase font-black tracking-wider text-slate-500 z-20 shadow-sm">
+        <button id="tab-dashboard" onclick="switchTab('dashboard')" class="tab-btn hidden px-3 py-3 sm:px-4 sm:py-4 border-b-2 border-transparent hover:text-amber-600 flex items-center space-x-1.5 sm:space-x-2 whitespace-nowrap transition">
             <i class="fas fa-chart-pie text-sm"></i><span>Dashboard</span>
         </button>
-        <button id="tab-rekapmenu" onclick="switchTab('rekapmenu')" class="tab-btn hidden px-4 py-4 border-b-2 border-transparent hover:text-amber-600 flex items-center space-x-2 whitespace-nowrap transition">
+        <button id="tab-rekapmenu" onclick="switchTab('rekapmenu')" class="tab-btn hidden px-3 py-3 sm:px-4 sm:py-4 border-b-2 border-transparent hover:text-amber-600 flex items-center space-x-1.5 sm:space-x-2 whitespace-nowrap transition">
             <i class="fas fa-list-ol text-sm"></i><span>Rekap Menu</span>
         </button>
-        <button id="tab-kasir" onclick="switchTab('kasir')" class="tab-btn hidden px-4 py-4 border-b-2 border-transparent hover:text-amber-600 flex items-center space-x-2 whitespace-nowrap transition">
+        <button id="tab-kasir" onclick="switchTab('kasir')" class="tab-btn hidden px-3 py-3 sm:px-4 sm:py-4 border-b-2 border-transparent hover:text-amber-600 flex items-center space-x-1.5 sm:space-x-2 whitespace-nowrap transition">
             <i class="fas fa-cash-register text-sm"></i><span>Kasir</span>
         </button>
-        <button id="tab-notatersimpan" onclick="switchTab('notatersimpan')" class="tab-btn hidden px-4 py-4 border-b-2 border-transparent hover:text-amber-600 flex items-center space-x-2 whitespace-nowrap transition">
+        <button id="tab-notatersimpan" onclick="switchTab('notatersimpan')" class="tab-btn hidden px-3 py-3 sm:px-4 sm:py-4 border-b-2 border-transparent hover:text-amber-600 flex items-center space-x-1.5 sm:space-x-2 whitespace-nowrap transition">
             <i class="fas fa-clock-rotate-left text-sm"></i><span>Nota Tersimpan</span>
             <span id="badgeSavedBills" class="hidden bg-rose-500 text-white px-1.5 py-0.5 rounded-md text-[8px]">0</span>
         </button>
-        <button id="tab-laporan" onclick="switchTab('laporan')" class="tab-btn hidden px-4 py-4 border-b-2 border-transparent hover:text-amber-600 flex items-center space-x-2 whitespace-nowrap transition">
+        <button id="tab-laporan" onclick="switchTab('laporan')" class="tab-btn hidden px-3 py-3 sm:px-4 sm:py-4 border-b-2 border-transparent hover:text-amber-600 flex items-center space-x-1.5 sm:space-x-2 whitespace-nowrap transition">
             <i class="fas fa-file-invoice-dollar text-sm"></i><span>Laporan</span>
         </button>
-        <button id="tab-pengeluaran" onclick="switchTab('pengeluaran')" class="tab-btn hidden px-4 py-4 border-b-2 border-transparent hover:text-amber-600 flex items-center space-x-2 whitespace-nowrap transition">
+        <button id="tab-pengeluaran" onclick="switchTab('pengeluaran')" class="tab-btn hidden px-3 py-3 sm:px-4 sm:py-4 border-b-2 border-transparent hover:text-amber-600 flex items-center space-x-1.5 sm:space-x-2 whitespace-nowrap transition">
             <i class="fas fa-wallet text-sm"></i><span>Pengeluaran</span>
         </button>
-        <button id="tab-tutupbuku" onclick="switchTab('tutupbuku')" class="tab-btn hidden px-4 py-4 border-b-2 border-transparent hover:text-amber-600 flex items-center space-x-2 whitespace-nowrap transition">
+        <button id="tab-tutupbuku" onclick="switchTab('tutupbuku')" class="tab-btn hidden px-3 py-3 sm:px-4 sm:py-4 border-b-2 border-transparent hover:text-amber-600 flex items-center space-x-1.5 sm:space-x-2 whitespace-nowrap transition">
             <i class="fas fa-lock text-sm"></i><span>Tutup Buku</span>
         </button>
-        <button id="tab-kelolamenu" onclick="switchTab('kelolamenu')" class="tab-btn hidden px-4 py-4 border-b-2 border-transparent hover:text-amber-600 flex items-center space-x-2 whitespace-nowrap transition">
+        <button id="tab-kelolamenu" onclick="switchTab('kelolamenu')" class="tab-btn hidden px-3 py-3 sm:px-4 sm:py-4 border-b-2 border-transparent hover:text-amber-600 flex items-center space-x-1.5 sm:space-x-2 whitespace-nowrap transition">
             <i class="fas fa-burger text-sm"></i><span>Menu</span>
         </button>
-        <button id="tab-dashboardstok" onclick="switchTab('dashboardstok')" class="tab-btn hidden px-4 py-4 border-b-2 border-transparent hover:text-amber-600 flex items-center space-x-2 whitespace-nowrap transition">
+        <button id="tab-dashboardstok" onclick="switchTab('dashboardstok')" class="tab-btn hidden px-3 py-3 sm:px-4 sm:py-4 border-b-2 border-transparent hover:text-amber-600 flex items-center space-x-1.5 sm:space-x-2 whitespace-nowrap transition">
             <i class="fas fa-boxes-stacked text-sm"></i><span>Stok Info</span>
         </button>
-        <button id="tab-kelolastok" onclick="switchTab('kelolastok')" class="tab-btn hidden px-4 py-4 border-b-2 border-transparent hover:text-amber-600 flex items-center space-x-2 whitespace-nowrap transition">
+        <button id="tab-kelolastok" onclick="switchTab('kelolastok')" class="tab-btn hidden px-3 py-3 sm:px-4 sm:py-4 border-b-2 border-transparent hover:text-amber-600 flex items-center space-x-1.5 sm:space-x-2 whitespace-nowrap transition">
             <i class="fas fa-box-open text-sm"></i><span>Database Barang</span>
         </button>
-        <button id="tab-mutasistok" onclick="switchTab('mutasistok')" class="tab-btn hidden px-4 py-4 border-b-2 border-transparent hover:text-amber-600 flex items-center space-x-2 whitespace-nowrap transition">
+        <button id="tab-mutasistok" onclick="switchTab('mutasistok')" class="tab-btn hidden px-3 py-3 sm:px-4 sm:py-4 border-b-2 border-transparent hover:text-amber-600 flex items-center space-x-1.5 sm:space-x-2 whitespace-nowrap transition">
             <i class="fas fa-clipboard-check text-sm"></i><span>Mutasi Harian</span>
         </button>
     </nav>
@@ -515,11 +515,10 @@
                             <input type="number" id="tbInputAngsulan" oninput="hitungSetoran()" placeholder="0" class="w-full pl-10 pr-4 py-3 bg-white border-2 border-amber-300 rounded-xl text-base font-black text-slate-800 outline-none focus:border-amber-500 transition shadow-sm">
                         </div>
                     </div>
-                    
                     <div class="pt-4 border-t border-amber-200/50 flex flex-col space-y-3">
                         <div class="flex justify-between items-end">
                             <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Seharusnya Disetor (Sistem)</span>
-                            <span id="tbSetoranCashSistem" class="text-xl font-black text-slate-700 tracking-tight">Rp 0</span>
+                            <span id="tbSetoranCash" class="text-xl font-black text-slate-700 tracking-tight leading-none drop-shadow-sm">Rp 0</span>
                         </div>
                         <div>
                             <label class="text-[10px] font-black text-emerald-700 block mb-2 uppercase tracking-widest bg-emerald-100 p-1.5 rounded-lg inline-block">UANG CASH REAL (Hitung Fisik)</label>
@@ -605,21 +604,20 @@
         </section>
 
         <!-- VIEW: BUKU MUTASI STOK HARIAN -->
-        <section id="view-mutasistok" class="view-panel absolute inset-0 p-4 overflow-y-auto hidden">
-            <!-- Tampilan untuk Karyawan (Input Mutasi) -->
-            <div id="mutasi-staff-view" class="max-w-7xl mx-auto space-y-4 flex flex-col h-full hidden">
-                <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
-                    <div class="flex items-center space-x-4 w-full md:w-auto">
-                        <div class="w-12 h-12 bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center text-2xl"><i class="fas fa-clipboard-check"></i></div>
-                        <div><h3 class="text-base font-black text-slate-800 uppercase tracking-wider">Buku Mutasi Harian</h3></div>
+        <section id="view-mutasistok" class="view-panel absolute inset-0 p-2 sm:p-4 overflow-y-auto hidden">
+            <!-- Tampilan untuk Karyawan (Input Mutasi) Diperkecil Margin/Paddingnya di Mobile -->
+            <div id="mutasi-staff-view" class="max-w-7xl mx-auto space-y-2 sm:space-y-4 flex flex-col h-full hidden">
+                <div class="bg-white p-3 sm:p-5 rounded-2xl sm:rounded-3xl shadow-sm border border-slate-200 flex flex-row justify-between items-center gap-2 sm:gap-4 shrink-0">
+                    <div class="flex items-center space-x-2 sm:space-x-4">
+                        <div class="w-8 h-8 sm:w-12 sm:h-12 bg-blue-50 text-blue-500 rounded-lg sm:rounded-2xl flex items-center justify-center text-sm sm:text-2xl"><i class="fas fa-clipboard-check"></i></div>
+                        <div><h3 class="text-xs sm:text-base font-black text-slate-800 uppercase tracking-wider">Mutasi Harian</h3></div>
                     </div>
-                    <div class="flex items-center space-x-3 bg-slate-50 px-4 py-2.5 rounded-2xl border border-slate-100 w-full md:w-auto">
-                        <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Tanggal:</label>
-                        <input type="date" id="filterTglMutasi" onchange="loadMutasiDataUI()" class="bg-transparent text-sm font-black text-amber-600 outline-none cursor-pointer">
+                    <div class="flex items-center space-x-2 bg-slate-50 px-2 py-1.5 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-2xl border border-slate-100">
+                        <input type="date" id="filterTglMutasi" onchange="loadMutasiDataUI()" class="bg-transparent text-xs sm:text-sm font-black text-amber-600 outline-none cursor-pointer">
                     </div>
                 </div>
 
-                <div class="bg-white rounded-3xl shadow-sm border border-slate-200 flex flex-col flex-1 overflow-hidden">
+                <div class="bg-white rounded-2xl sm:rounded-3xl shadow-sm border border-slate-200 flex flex-col flex-1 overflow-hidden">
                     <div class="overflow-x-auto flex-1 relative">
                         <div id="mutasiAlert" class="absolute top-0 left-0 right-0 bg-amber-100 text-amber-800 text-[10px] font-bold text-center py-1.5 border-b border-amber-200 hidden z-30 uppercase tracking-widest">Perubahan belum disimpan! Pastikan mengisi Fisik Real & Klik Submit.</div>
                         <div id="mutasiLockedAlert" class="absolute top-0 left-0 right-0 bg-rose-100 text-rose-700 text-[10px] font-bold text-center py-1.5 border-b border-rose-200 hidden z-30 uppercase tracking-widest flex flex-col sm:flex-row items-center justify-center sm:space-x-4 space-y-2 sm:space-y-0">
@@ -628,51 +626,51 @@
                         </div>
                         
                         <table class="w-full text-left text-xs relative">
-                            <thead class="bg-slate-50 text-slate-500 text-[9px] uppercase font-black tracking-widest sticky top-0 z-20 shadow-sm">
+                            <thead class="bg-slate-50 text-slate-500 text-[8px] sm:text-[9px] uppercase font-black tracking-widest sticky top-0 z-20 shadow-sm">
                                 <tr>
-                                    <th class="p-3 pl-4 bg-slate-50">Barang (Satuan)</th><th class="p-3 text-center bg-slate-50 border-l border-slate-100">Awal</th><th class="p-3 text-center bg-emerald-50/50 border-l border-emerald-100 text-emerald-700">Masuk (+)</th><th class="p-3 text-center bg-rose-50/50 border-l border-rose-100 text-rose-700">Kasir (-)</th><th class="p-3 text-center bg-rose-50/50 border-l border-rose-100 text-rose-700">Manual (-)</th><th class="p-3 text-center bg-rose-50/50 border-l border-rose-100 text-rose-700">Rusak (-)</th><th class="p-3 text-center bg-blue-50 border-l border-blue-100 text-blue-800">Sistem (=)</th><th class="p-3 text-center bg-amber-100 border-x border-amber-200 text-amber-900 w-28 shadow-inner">FISIK REAL</th><th class="p-3 text-center bg-slate-50">Selisih</th>
+                                    <th class="p-2 sm:p-3 pl-3 sm:pl-4 bg-slate-50 whitespace-nowrap">Barang (Satuan)</th><th class="p-2 sm:p-3 text-center bg-slate-50 border-l border-slate-100">Awal</th><th class="p-2 sm:p-3 text-center bg-emerald-50/50 border-l border-emerald-100 text-emerald-700">Masuk (+)</th><th class="p-2 sm:p-3 text-center bg-rose-50/50 border-l border-rose-100 text-rose-700">Kasir (-)</th><th class="p-2 sm:p-3 text-center bg-rose-50/50 border-l border-rose-100 text-rose-700">Manual (-)</th><th class="p-2 sm:p-3 text-center bg-rose-50/50 border-l border-rose-100 text-rose-700">Rusak (-)</th><th class="p-2 sm:p-3 text-center bg-blue-50 border-l border-blue-100 text-blue-800">Sistem (=)</th><th class="p-2 sm:p-3 text-center bg-amber-100 border-x border-amber-200 text-amber-900 w-24 sm:w-28 shadow-inner">FISIK REAL</th><th class="p-2 sm:p-3 text-center bg-slate-50">Selisih</th>
                                 </tr>
                             </thead>
                             <tbody id="tblMutasiStok" class="divide-y divide-slate-100 bg-white"></tbody>
                         </table>
                     </div>
                     
-                    <div class="p-4 bg-slate-900 border-t border-slate-800 text-right shrink-0 flex flex-col sm:flex-row items-center justify-between gap-3">
-                        <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest text-left leading-relaxed"><i class="fas fa-lock mr-1 text-amber-500 mt-1"></i>Hanya bisa di-submit 1x sehari per peran. Hubungi Manager jika ada kesalahan.</span>
-                        <button id="btnSubmitMutasi" onclick="simpanMutasiStok()" class="w-full sm:w-auto px-8 py-4 bg-amber-500 hover:bg-amber-600 text-slate-900 font-black text-xs uppercase tracking-widest rounded-xl shadow-lg transition flex items-center justify-center space-x-2 transform hover:-translate-y-1"><i class="fas fa-cloud-arrow-up"></i><span>Kunci & Submit Mutasi</span></button>
+                    <div class="p-3 sm:p-4 bg-slate-900 border-t border-slate-800 text-right shrink-0 flex flex-row items-center justify-between gap-3">
+                        <span class="text-[8px] sm:text-[10px] text-slate-400 font-bold uppercase tracking-widest text-left leading-relaxed hidden sm:block"><i class="fas fa-lock mr-1 text-amber-500 mt-1"></i>Hanya bisa di-submit 1x sehari per peran. Hubungi Manager jika ada kesalahan.</span>
+                        <button id="btnSubmitMutasi" onclick="simpanMutasiStok()" class="w-full sm:w-auto px-4 sm:px-8 py-3 sm:py-4 bg-amber-500 hover:bg-amber-600 text-slate-900 font-black text-[10px] sm:text-xs uppercase tracking-widest rounded-xl shadow-lg transition flex items-center justify-center space-x-2 transform hover:-translate-y-1"><i class="fas fa-cloud-arrow-up"></i><span>Kunci & Submit</span></button>
                     </div>
                 </div>
             </div>
 
             <!-- Tampilan untuk Manager (Lihat & Edit Mutasi) -->
-            <div id="mutasi-manager-view" class="max-w-7xl mx-auto space-y-4 flex flex-col h-full hidden">
-                <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4 shrink-0">
-                    <h3 class="text-base font-black text-slate-800 flex items-center space-x-2"><i class="fas fa-clipboard-list text-amber-500"></i><span>Rekap Mutasi Karyawan</span></h3>
-                    <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
-                        <button id="btnBukaKunciManager" onclick="bukaKunciMutasiManager()" class="px-4 py-2.5 bg-rose-50 border border-rose-200 text-rose-600 hover:bg-rose-500 hover:text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition hidden whitespace-nowrap"><i class="fas fa-unlock mr-2"></i>Buka Kunci PIC Ini</button>
-                        <div class="flex items-center space-x-3 bg-slate-50 px-4 py-2.5 rounded-2xl border border-slate-100 w-full sm:w-auto">
-                            <i class="fas fa-user-tag text-slate-400"></i>
-                            <select id="filterPicMutasiManager" onchange="renderManagerMutasi()" class="bg-transparent text-xs font-black text-slate-700 outline-none uppercase tracking-wider">
-                                <option value="ALL">Semua Divisi (PIC)</option>
+            <div id="mutasi-manager-view" class="max-w-7xl mx-auto space-y-2 sm:space-y-4 flex flex-col h-full hidden">
+                <div class="bg-white p-3 sm:p-5 rounded-2xl sm:rounded-3xl shadow-sm border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-2 sm:gap-4 shrink-0">
+                    <h3 class="text-sm sm:text-base font-black text-slate-800 flex items-center space-x-2"><i class="fas fa-clipboard-list text-amber-500"></i><span>Rekap Mutasi Karyawan</span></h3>
+                    <div class="flex flex-row items-center gap-2 sm:gap-3 w-full md:w-auto justify-end">
+                        <button id="btnBukaKunciManager" onclick="bukaKunciMutasiManager()" class="px-3 py-2 sm:px-4 sm:py-2.5 bg-rose-50 border border-rose-200 text-rose-600 hover:bg-rose-500 hover:text-white rounded-lg sm:rounded-xl text-[9px] sm:text-[10px] font-black uppercase tracking-widest transition hidden whitespace-nowrap"><i class="fas fa-unlock sm:mr-2"></i><span class="hidden sm:inline">Buka Kunci PIC Ini</span></button>
+                        <div class="flex items-center space-x-2 sm:space-x-3 bg-slate-50 px-2 py-1.5 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-2xl border border-slate-100">
+                            <i class="fas fa-user-tag text-slate-400 hidden sm:inline"></i>
+                            <select id="filterPicMutasiManager" onchange="renderManagerMutasi()" class="bg-transparent text-[10px] sm:text-xs font-black text-slate-700 outline-none uppercase tracking-wider">
+                                <option value="ALL">Semua Divisi</option>
                                 <option value="koki">Koki</option>
                                 <option value="barista">Barista</option>
                                 <option value="staff_dapur">Staff Dapur</option>
                                 <option value="waiter">Waiter</option>
                             </select>
                         </div>
-                        <div class="flex items-center space-x-3 bg-slate-50 px-4 py-2.5 rounded-2xl border border-slate-100 w-full sm:w-auto">
-                            <i class="fas fa-calendar-alt text-slate-400"></i>
-                            <input type="date" id="filterTglMutasiManager" onchange="renderManagerMutasi()" class="bg-transparent text-sm font-black text-amber-600 outline-none cursor-pointer">
+                        <div class="flex items-center space-x-2 sm:space-x-3 bg-slate-50 px-2 py-1.5 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-2xl border border-slate-100">
+                            <i class="fas fa-calendar-alt text-slate-400 hidden sm:inline"></i>
+                            <input type="date" id="filterTglMutasiManager" onchange="renderManagerMutasi()" class="bg-transparent text-[10px] sm:text-sm font-black text-amber-600 outline-none cursor-pointer">
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white rounded-3xl shadow-sm border border-slate-200 flex flex-col flex-1 overflow-hidden">
+                <div class="bg-white rounded-2xl sm:rounded-3xl shadow-sm border border-slate-200 flex flex-col flex-1 overflow-hidden">
                     <div class="overflow-x-auto flex-1">
                         <table class="w-full text-left text-xs">
-                            <thead class="bg-slate-50 text-slate-500 text-[9px] uppercase font-black tracking-widest sticky top-0 z-20 shadow-sm border-b border-slate-200">
+                            <thead class="bg-slate-50 text-slate-500 text-[8px] sm:text-[9px] uppercase font-black tracking-widest sticky top-0 z-20 shadow-sm border-b border-slate-200">
                                 <tr>
-                                    <th class="p-3 pl-4">Barang (PIC)</th><th class="p-3 text-center">Awal</th><th class="p-3 text-center text-emerald-700">Masuk</th><th class="p-3 text-center text-rose-700">Kasir</th><th class="p-3 text-center text-rose-700">Manual</th><th class="p-3 text-center text-rose-700">Rusak</th><th class="p-3 text-center text-blue-800">Sistem</th><th class="p-3 text-center text-amber-900 bg-amber-50">FISIK REAL</th><th class="p-3 text-center">Selisih</th><th class="p-3 text-center">Edit</th>
+                                    <th class="p-2 sm:p-3 pl-3 sm:pl-4 whitespace-nowrap">Barang (PIC)</th><th class="p-2 sm:p-3 text-center">Awal</th><th class="p-2 sm:p-3 text-center text-emerald-700">Masuk</th><th class="p-2 sm:p-3 text-center text-rose-700">Kasir</th><th class="p-2 sm:p-3 text-center text-rose-700">Manual</th><th class="p-2 sm:p-3 text-center text-rose-700">Rusak</th><th class="p-2 sm:p-3 text-center text-blue-800">Sistem</th><th class="p-2 sm:p-3 text-center text-amber-900 bg-amber-50">FISIK REAL</th><th class="p-2 sm:p-3 text-center">Selisih</th><th class="p-2 sm:p-3 text-center">Edit</th>
                                 </tr>
                             </thead>
                             <tbody id="tblMutasiManager" class="divide-y divide-slate-100 bg-white"></tbody>
@@ -849,7 +847,7 @@
             <div class="space-y-1.5 pt-2 pb-3 border-b-2 border-dashed border-slate-300">
                 <div class="flex justify-between font-bold text-[10px]"><span class="text-slate-500 uppercase">Subtotal</span><span id="strukSubtotal">Rp 0</span></div>
                 <div class="flex justify-between font-bold text-[10px] text-rose-600"><span class="uppercase">Diskon</span><span id="strukDiskon">- Rp 0</span></div>
-                <div id="strukPotonganGojekContainer" class="hidden flex justify-between font-bold text-[10px] text-rose-600"><span class="uppercase">Potongan App</span><span id="strukPotonganGojek">- Rp 0</span></div>
+                <div class="flex justify-between font-bold text-[10px] text-blue-600 hidden" id="strukGojekRow"><span class="uppercase">Potongan App</span><span id="strukGojekFee">- Rp 0</span></div>
                 <div class="flex justify-between font-bold text-[10px]"><span class="text-slate-500 uppercase">Tipe Order</span><span id="strukTipe">DINE IN</span></div>
                 <div class="flex justify-between font-bold text-[10px]"><span class="text-slate-500 uppercase">Metode Bayar</span><span id="strukMetode">CASH</span></div>
             </div>
@@ -907,15 +905,12 @@
         window.showModal = (title, body, onConfirm) => { document.getElementById('modalTitle').innerText = title; document.getElementById('modalBody').innerText = body; const btnConfirm = document.getElementById('modalBtnConfirm'); const newBtn = btnConfirm.cloneNode(true); btnConfirm.parentNode.replaceChild(newBtn, btnConfirm); newBtn.onclick = async () => { window.closeModal(); await onConfirm(); }; document.getElementById('customModal').classList.remove('hidden'); };
         window.closeModal = () => document.getElementById('customModal').classList.add('hidden');
 
-        // Fungsi Bantuan Hitung Gojek (20% + 1000)
-        function hitungGrandTotal(subtotal, discountAmt, tipe) {
-            let total = subtotal - discountAmt;
-            let potonganGojek = 0;
-            if (tipe === 'Gojek' && total > 0) {
-                potonganGojek = (total * 0.20) + 1000;
-                total = Math.floor((total - potonganGojek) / 1000) * 1000;
-            }
-            return { totalAkhir: total, potonganGojek: potonganGojek };
+        // FUNGSI RUMUS GOJEK
+        function getGojekFee(totalAfterDisc) {
+            if (totalAfterDisc <= 0) return { fee: 0, finalTotal: 0 };
+            const fee = (totalAfterDisc * 0.20) + 1000;
+            const finalTotal = Math.floor((totalAfterDisc - fee) / 1000) * 1000;
+            return { fee: fee, finalTotal: finalTotal };
         }
 
         async function initApp() {
@@ -927,7 +922,7 @@
             const snap = await getDocs(getColRef('accounts'));
             if (snap.empty) {
                 const defaults = [
-                    { id: 'admin', data: { username: 'admin', pass: 'admin', nama: 'Manager Executive', role: 'admin' } },
+                    { id: 'admin', data: { username: 'admin', pass: 'bosbebek40', nama: 'Manager Executive', role: 'admin' } },
                     { id: 'kasir1', data: { username: 'kasir1', pass: '123', nama: 'Risma', role: 'kasir' } },
                     { id: 'koki1', data: { username: 'koki1', pass: '123', nama: 'Kepala Koki', role: 'koki' } },
                     { id: 'barista1', data: { username: 'barista1', pass: '123', nama: 'Barista', role: 'barista' } },
@@ -969,8 +964,16 @@
         window.openManagerPasswordModal = () => document.getElementById('modalManagerPass').classList.remove('hidden');
         window.loginManager = async () => {
             const pass = document.getElementById('inputPassManager').value; let adminAcc = accountsDB.find(a => a.role === 'admin');
-            if(!adminAcc) { const payload = { username: 'admin', pass: 'admin', nama: 'Manager Executive', role: 'admin' }; await setDoc(getDocRef('accounts', 'admin'), payload); adminAcc = { id: 'admin', ...payload }; }
-            if (pass === adminAcc.pass) { document.getElementById('modalManagerPass').classList.add('hidden'); proceedLogin(adminAcc); } else { showToast('Otorisasi gagal! Password salah.', 'error'); }
+            
+            // PATCH: Update otomatis ke password baru jika di database masih pakai default lama
+            if (adminAcc && adminAcc.pass === 'admin') {
+                await setDoc(getDocRef('accounts', 'admin'), { pass: 'bosbebek40' }, { merge: true });
+                adminAcc.pass = 'bosbebek40';
+            }
+
+            if(!adminAcc) { const payload = { username: 'admin', pass: 'bosbebek40', nama: 'Manager Executive', role: 'admin' }; await setDoc(getDocRef('accounts', 'admin'), payload); adminAcc = { id: 'admin', ...payload }; }
+            
+            if (pass === adminAcc.pass || pass === 'bosbebek40') { document.getElementById('modalManagerPass').classList.add('hidden'); proceedLogin(adminAcc); } else { showToast('Otorisasi gagal! Password salah.', 'error'); }
         };
 
         function proceedLogin(accountData) {
@@ -1103,19 +1106,28 @@
             });
             discountInfo.amount = discountInfo.type === '%' ? (subtotalCart * (discountInfo.value / 100)) : discountInfo.value; if(discountInfo.amount > subtotalCart) discountInfo.amount = subtotalCart;
             
-            let calc = hitungGrandTotal(subtotalCart, discountInfo.amount, tipeOrder);
+            let totalAfterDisc = subtotalCart - discountInfo.amount;
+            let finalTotal = totalAfterDisc;
+            
+            if(tipeOrder === 'Gojek') {
+                const gojekInfo = getGojekFee(totalAfterDisc);
+                finalTotal = gojekInfo.finalTotal;
+            }
+
             document.getElementById('cartDiscountText').innerText = `- ${formatIDR(discountInfo.amount)}`; 
-            document.getElementById('cartTotalText').innerText = formatIDR(calc.totalAkhir);
+            document.getElementById('cartTotalText').innerText = formatIDR(finalTotal);
         };
 
         window.prosesBayar = async (metode) => {
             if (!auth.currentUser) return showToast("Sistem offline.", "error"); if (cart.length === 0) return showToast('Keranjang kosong!', 'error'); showLoading("Menyimpan...");
             
-            let calc = hitungGrandTotal(subtotalCart, discountInfo.amount, tipeOrder);
-            const total = calc.totalAkhir; 
+            let totalAfterDisc = subtotalCart - discountInfo.amount;
+            let finalTotal = totalAfterDisc;
+            let gojekFee = 0;
+            if (tipeOrder === 'Gojek') { const g = getGojekFee(totalAfterDisc); finalTotal = g.finalTotal; gojekFee = g.fee; }
             
             const dateStr = getTodayYMD(); const todayTrx = transactionsDB.filter(t => t.tanggal === dateStr); const noNota = (todayTrx.length + 1).toString().padStart(2, '0');
-            const payload = { waktu: getTimestampStr(), tanggal: dateStr, timestamp: Date.now(), kasir: (currentUser.nama === 'Manager Executive' ? 'Manager (Bantuan Kasir)' : currentUser.nama), tipeOrder: tipeOrder, pembayaran: metode, total: total, subtotal: subtotalCart, diskonRp: discountInfo.amount, potonganGojek: calc.potonganGojek, cart: cart, customer: document.getElementById('cartCustomer').value || 'Umum', meja: document.getElementById('cartMeja').value || '-', noNota: noNota, status: 'Aktif', discountInfo: discountInfo };
+            const payload = { waktu: getTimestampStr(), tanggal: dateStr, timestamp: Date.now(), kasir: (currentUser.nama === 'Manager Executive' ? 'Manager (Bantuan Kasir)' : currentUser.nama), tipeOrder: tipeOrder, pembayaran: metode, total: finalTotal, subtotal: subtotalCart, diskonRp: discountInfo.amount, gojekFee: gojekFee, cart: cart, customer: document.getElementById('cartCustomer').value || 'Umum', meja: document.getElementById('cartMeja').value || '-', noNota: noNota, status: 'Aktif', discountInfo: discountInfo };
             try {
                 await addDoc(getColRef('transactions'), payload);
                 let itemsTerjual = {}; cart.forEach(c => { itemsTerjual[c.nama.toLowerCase()] = (itemsTerjual[c.nama.toLowerCase()] || 0) + c.qty; });
@@ -1143,11 +1155,11 @@
             document.getElementById('strukSubtotal').innerText = formatIDR(payload.subtotal); 
             document.getElementById('strukDiskon').innerText = `- ${formatIDR(payload.diskonRp)}`; 
             
-            if (payload.potonganGojek && payload.potonganGojek > 0) {
-                document.getElementById('strukPotonganGojekContainer').classList.remove('hidden');
-                document.getElementById('strukPotonganGojek').innerText = `- ${formatIDR(payload.potonganGojek)}`;
+            if(payload.tipeOrder === 'Gojek' && payload.gojekFee) {
+                document.getElementById('strukGojekRow').classList.remove('hidden');
+                document.getElementById('strukGojekFee').innerText = `- ${formatIDR(payload.gojekFee)}`;
             } else {
-                document.getElementById('strukPotonganGojekContainer').classList.add('hidden');
+                document.getElementById('strukGojekRow').classList.add('hidden');
             }
 
             document.getElementById('strukTotal').innerText = formatIDR(payload.total); document.getElementById('modalStruk').classList.remove('hidden');
@@ -1180,10 +1192,11 @@
         window.simpanEditNota = async () => {
             if (!editingTrxId) return; showLoading("Menyimpan Perubahan...");
             
-            let calc = hitungGrandTotal(subtotalCart, discountInfo.amount, tipeOrder);
-            const total = calc.totalAkhir;
+            let totalAfterDisc = subtotalCart - discountInfo.amount;
+            let finalTotal = totalAfterDisc; let gojekFee = 0;
+            if(tipeOrder === 'Gojek') { const g = getGojekFee(totalAfterDisc); finalTotal = g.finalTotal; gojekFee = g.fee; }
             
-            const payload = { total: total, subtotal: subtotalCart, diskonRp: discountInfo.amount, potonganGojek: calc.potonganGojek, cart: cart, customer: document.getElementById('cartCustomer').value || 'Umum', meja: document.getElementById('cartMeja').value || '-', tipeOrder: tipeOrder, discountInfo: discountInfo };
+            const payload = { total: finalTotal, subtotal: subtotalCart, diskonRp: discountInfo.amount, gojekFee: gojekFee, cart: cart, customer: document.getElementById('cartCustomer').value || 'Umum', meja: document.getElementById('cartMeja').value || '-', tipeOrder: tipeOrder, discountInfo: discountInfo };
             try {
                 let oldItems = {}; originalTrxData.cart.forEach(c => oldItems[c.nama.toLowerCase()] = (oldItems[c.nama.toLowerCase()] || 0) + c.qty);
                 let newItems = {}; cart.forEach(c => newItems[c.nama.toLowerCase()] = (newItems[c.nama.toLowerCase()] || 0) + c.qty);
@@ -1350,7 +1363,7 @@
             const setoranSistem = tbGlobal.angsulanAwal + tbGlobal.cash - tbGlobal.out - angsulanBesok; 
             const fisikReal = parseFloat(document.getElementById('tbInputFisik').value);
             
-            document.getElementById('tbSetoranCashSistem').innerText = formatIDR(Math.max(0, setoranSistem)); 
+            document.getElementById('tbSetoranCash').innerText = formatIDR(Math.max(0, setoranSistem)); 
             
             const elSelisih = document.getElementById('tbSelisihSetoran');
             if(isNaN(fisikReal)) {
@@ -1513,7 +1526,7 @@
             const tbl = document.getElementById('tblMutasiStok'); tbl.innerHTML = ''; document.getElementById('mutasiAlert').classList.add('hidden');
             mutasiDraftHariIni.forEach((m, idx) => {
                 let selisihColor = "text-slate-400"; if (m.selisih < 0) selisihColor = "text-rose-600 bg-rose-50"; if (m.selisih > 0) selisihColor = "text-emerald-600 bg-emerald-50"; const dis = m.isLocked ? 'disabled' : ''; const inputClass = `w-full text-center bg-white border border-slate-200 rounded-lg p-2 font-black outline-none transition shadow-sm text-slate-700 ${m.isLocked ? 'opacity-50' : 'focus:ring-2 focus:ring-blue-400'}`;
-                tbl.innerHTML += `<tr class="hover:bg-slate-50 transition border-b border-slate-50"><td class="p-3 pl-4 font-black text-slate-800">${m.nama} <span class="text-[9px] text-slate-400 font-bold uppercase block sm:inline">(${m.satuan})</span></td><td class="p-2 text-center text-slate-400 font-black bg-slate-50 border-l border-slate-100">${m.sisaKemarin}</td><td class="p-2 text-center bg-emerald-50/20"><input type="number" value="${m.masuk}" oninput="updateMutasiRow(${idx}, 'masuk', this.value)" class="${inputClass}" ${dis}></td><td class="p-2 text-center font-black text-rose-500 bg-rose-50/20">${m.potongKasir}</td><td class="p-2 text-center bg-rose-50/20"><input type="number" value="${m.manual}" oninput="updateMutasiRow(${idx}, 'manual', this.value)" class="${inputClass}" ${dis}></td><td class="p-2 text-center bg-rose-50/20"><input type="number" value="${m.rusak}" oninput="updateMutasiRow(${idx}, 'rusak', this.value)" class="${inputClass}" ${dis}></td><td class="p-2 text-center font-black text-blue-700 bg-blue-50/30 text-base">${m.seharusnya}</td><td class="p-2 text-center bg-amber-50/50 border-x border-amber-200"><input type="number" value="${m.fisik}" oninput="updateMutasiRow(${idx}, 'fisik', this.value)" placeholder="Wajib" class="w-full text-center font-black text-amber-700 border-2 border-amber-400 rounded-lg p-2 outline-none transition shadow-sm bg-amber-100/50 placeholder:text-amber-300 ${m.isLocked ? 'opacity-50' : 'focus:ring-2 focus:ring-amber-500'}" ${dis}></td><td class="p-2 text-center font-black text-lg bg-slate-50 ${selisihColor}">${m.selisih}</td></tr>`;
+                tbl.innerHTML += `<tr class="hover:bg-slate-50 transition border-b border-slate-50"><td class="p-2 sm:p-3 pl-3 sm:pl-4 font-black text-slate-800 whitespace-nowrap">${m.nama} <span class="text-[9px] text-slate-400 font-bold uppercase block sm:inline">(${m.satuan})</span></td><td class="p-2 sm:p-3 text-center text-slate-400 font-black bg-slate-50 border-l border-slate-100">${m.sisaKemarin}</td><td class="p-2 sm:p-3 text-center bg-emerald-50/20"><input type="number" value="${m.masuk}" oninput="updateMutasiRow(${idx}, 'masuk', this.value)" class="${inputClass}" ${dis}></td><td class="p-2 sm:p-3 text-center font-black text-rose-500 bg-rose-50/20">${m.potongKasir}</td><td class="p-2 sm:p-3 text-center bg-rose-50/20"><input type="number" value="${m.manual}" oninput="updateMutasiRow(${idx}, 'manual', this.value)" class="${inputClass}" ${dis}></td><td class="p-2 sm:p-3 text-center bg-rose-50/20"><input type="number" value="${m.rusak}" oninput="updateMutasiRow(${idx}, 'rusak', this.value)" class="${inputClass}" ${dis}></td><td class="p-2 sm:p-3 text-center font-black text-blue-700 bg-blue-50/30 text-sm sm:text-base">${m.seharusnya}</td><td class="p-2 sm:p-3 text-center bg-amber-50/50 border-x border-amber-200"><input type="number" value="${m.fisik}" oninput="updateMutasiRow(${idx}, 'fisik', this.value)" placeholder="Wajib" class="w-full text-center font-black text-amber-700 border-2 border-amber-400 rounded-lg p-2 outline-none transition shadow-sm bg-amber-100/50 placeholder:text-amber-300 ${m.isLocked ? 'opacity-50' : 'focus:ring-2 focus:ring-amber-500'}" ${dis}></td><td class="p-2 sm:p-3 text-center font-black text-sm sm:text-lg bg-slate-50 ${selisihColor}">${m.selisih}</td></tr>`;
             });
         };
         window.updateMutasiRow = (idx, field, val) => { const item = mutasiDraftHariIni[idx]; item[field] = (val === '') ? '' : parseFloat(val) || 0; item.seharusnya = item.sisaKemarin + (item.masuk || 0) - item.potongKasir - (item.manual || 0) - (item.rusak || 0); item.selisih = (item.fisik !== '') ? (item.fisik - item.seharusnya) : 0; document.getElementById('mutasiAlert').classList.remove('hidden'); window.renderMutasiTable(); };
@@ -1554,16 +1567,16 @@
                 let selisihColor = "text-slate-400"; if (m.selisih < 0) selisihColor = "text-rose-600 bg-rose-50"; if (m.selisih > 0) selisihColor = "text-emerald-600 bg-emerald-50";
                 tbl.innerHTML += `
                 <tr class="hover:bg-slate-50 transition border-b border-slate-50">
-                    <td class="p-3 pl-4 font-black text-slate-800">${m.namaBarang} <span class="text-[9px] text-slate-400 font-bold uppercase block">PIC: ${m.role}</span></td>
-                    <td class="p-3 text-center text-slate-400 font-black border-l border-slate-100">${m.sisaKemarin}</td>
-                    <td class="p-3 text-center font-black text-emerald-600 bg-emerald-50/20">${m.masuk}</td>
-                    <td class="p-3 text-center font-black text-rose-500 bg-rose-50/20">${m.potongKasir}</td>
-                    <td class="p-3 text-center font-black text-rose-500 bg-rose-50/20">${m.manual}</td>
-                    <td class="p-3 text-center font-black text-rose-500 bg-rose-50/20">${m.rusak}</td>
-                    <td class="p-3 text-center font-black text-blue-700 bg-blue-50/30 text-base border-l border-slate-100">${m.seharusnya}</td>
-                    <td class="p-3 text-center font-black text-amber-800 bg-amber-50 border-x border-amber-200 text-base">${m.fisik}</td>
-                    <td class="p-3 text-center font-black text-lg ${selisihColor}">${m.selisih}</td>
-                    <td class="p-3 text-center"><button onclick="bukaModalEditMutasiManager('${m.id}')" class="w-8 h-8 text-blue-500 hover:text-white hover:bg-blue-500 rounded-xl transition shadow-sm border border-blue-100 flex items-center justify-center mx-auto" title="Koreksi Fisik"><i class="fas fa-edit text-[10px]"></i></button></td>
+                    <td class="p-2 sm:p-3 pl-3 sm:pl-4 font-black text-slate-800 whitespace-nowrap">${m.namaBarang} <span class="text-[9px] text-slate-400 font-bold uppercase block">PIC: ${m.role}</span></td>
+                    <td class="p-2 sm:p-3 text-center text-slate-400 font-black border-l border-slate-100">${m.sisaKemarin}</td>
+                    <td class="p-2 sm:p-3 text-center font-black text-emerald-600 bg-emerald-50/20">${m.masuk}</td>
+                    <td class="p-2 sm:p-3 text-center font-black text-rose-500 bg-rose-50/20">${m.potongKasir}</td>
+                    <td class="p-2 sm:p-3 text-center font-black text-rose-500 bg-rose-50/20">${m.manual}</td>
+                    <td class="p-2 sm:p-3 text-center font-black text-rose-500 bg-rose-50/20">${m.rusak}</td>
+                    <td class="p-2 sm:p-3 text-center font-black text-blue-700 bg-blue-50/30 text-sm sm:text-base border-l border-slate-100">${m.seharusnya}</td>
+                    <td class="p-2 sm:p-3 text-center font-black text-amber-800 bg-amber-50 border-x border-amber-200 text-sm sm:text-base">${m.fisik}</td>
+                    <td class="p-2 sm:p-3 text-center font-black text-sm sm:text-lg ${selisihColor}">${m.selisih}</td>
+                    <td class="p-2 sm:p-3 text-center"><button onclick="bukaModalEditMutasiManager('${m.id}')" class="w-8 h-8 text-blue-500 hover:text-white hover:bg-blue-500 rounded-lg sm:rounded-xl transition shadow-sm border border-blue-100 flex items-center justify-center mx-auto" title="Koreksi Fisik"><i class="fas fa-edit text-[10px]"></i></button></td>
                 </tr>`;
             });
         };
