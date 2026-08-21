@@ -695,7 +695,7 @@
 
                 <div class="bg-white rounded-2xl sm:rounded-3xl shadow-sm border border-slate-200 flex flex-col flex-1 overflow-hidden">
                     <div class="overflow-x-auto flex-1 relative">
-                        <div id="mutasiAlert" class="absolute top-0 left-0 right-0 bg-amber-100 text-amber-800 text-[10px] font-bold text-center py-1.5 border-b border-amber-200 hidden z-30 uppercase tracking-widest">Perubahan draf tersimpan sementara. Pastikan mengisi Fisik Real & Klik Submit.</div>
+                        <div id="mutasiAlert" class="absolute top-0 left-0 right-0 bg-amber-100 text-amber-800 text-[10px] font-bold text-center py-1.5 border-b border-amber-200 hidden z-30 uppercase tracking-widest">Perubahan belum disimpan! Pastikan mengisi Fisik Real & Klik Submit.</div>
                         <div id="mutasiLockedAlert" class="absolute top-0 left-0 right-0 bg-rose-100 text-rose-700 text-[10px] font-bold text-center py-1.5 border-b border-rose-200 hidden z-30 uppercase tracking-widest flex flex-col sm:flex-row items-center justify-center sm:space-x-4 space-y-2 sm:space-y-0">
                             <span><i class="fas fa-lock mr-1"></i> Data hari ini sudah disubmit.</span>
                             <button id="btnAjukanBuka" onclick="ajukanBukaKunci()" class="bg-rose-500 text-white px-3 py-1 rounded-md shadow-sm hover:bg-rose-600 transition flex items-center space-x-1"><i class="fas fa-key text-[9px]"></i><span>Ajukan Buka Kunci</span></button>
@@ -903,6 +903,64 @@
         </div>
     </div>
 
+    <!-- Modal Manual Pemasukan (Finance) -->
+    <div id="modalKasIn" class="fixed inset-0 bg-slate-900/80 z-[70] hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-xs w-full p-6 shadow-2xl animate-fade-in relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-emerald-500"></div>
+            <h3 class="text-base font-black mb-4 uppercase tracking-widest text-emerald-800 text-center flex items-center justify-center"><i class="fas fa-arrow-down text-emerald-500 mr-2"></i>Input Pemasukan</h3>
+            <div class="space-y-4 text-xs font-bold text-slate-600">
+                <div>
+                    <label class="block mb-1 text-[10px] uppercase tracking-widest">Tanggal</label>
+                    <input type="date" id="kasInTgl" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-emerald-400 font-black text-slate-800">
+                </div>
+                <div>
+                    <label class="block mb-1 text-[10px] uppercase tracking-widest">Sumber / Keterangan</label>
+                    <input type="text" id="kasInKet" placeholder="Cth: Suntikan Modal Owner" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-emerald-400 font-black text-slate-800">
+                </div>
+                <div>
+                    <label class="block mb-1 text-[10px] uppercase tracking-widest">Nominal (Rp)</label>
+                    <input type="number" id="kasInNominal" placeholder="0" class="w-full px-4 py-3 bg-emerald-50 border border-emerald-200 rounded-xl outline-none focus:border-emerald-500 font-black text-emerald-700 text-lg">
+                </div>
+            </div>
+            <div class="flex space-x-2 mt-6">
+                <button onclick="document.getElementById('modalKasIn').classList.add('hidden')" class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs rounded-xl transition">Batal</button>
+                <button onclick="simpanKasIn()" class="flex-1 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-black uppercase tracking-widest text-xs rounded-xl shadow-md transition">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Pengeluaran (Finance) -->
+    <div id="modalKasOut" class="fixed inset-0 bg-slate-900/80 z-[70] hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-xs w-full p-6 shadow-2xl animate-fade-in relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-rose-500"></div>
+            <h3 class="text-base font-black mb-4 uppercase tracking-widest text-rose-800 text-center flex items-center justify-center"><i class="fas fa-arrow-up text-rose-500 mr-2"></i>Catat Pengeluaran</h3>
+            <div class="space-y-4 text-xs font-bold text-slate-600">
+                <div>
+                    <label class="block mb-1 text-[10px] uppercase tracking-widest">Tanggal</label>
+                    <input type="date" id="kasOutTgl" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-rose-400 font-black text-slate-800">
+                </div>
+                <div>
+                    <label class="block mb-1 text-[10px] uppercase tracking-widest">Kategori Pengeluaran</label>
+                    <select id="kasOutKat" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-rose-400 font-black text-slate-800">
+                        <option value="Belanja Mba Ani">Belanja Mba Ani</option>
+                        <option value="Stok Daging">Stok Daging</option>
+                        <option value="Tagihan M-Cell">Tagihan M-Cell</option>
+                        <option value="Bayar Hutang">Bayar Hutang</option>
+                        <option value="Lain-Lain (DLL)">Lain-Lain (DLL)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block mb-1 text-[10px] uppercase tracking-widest">Nominal (Rp)</label>
+                    <input type="number" id="kasOutNominal" placeholder="0" class="w-full px-4 py-3 bg-rose-50 border border-rose-200 rounded-xl outline-none focus:border-rose-500 font-black text-rose-700 text-lg">
+                </div>
+            </div>
+            <div class="flex space-x-2 mt-6">
+                <button onclick="document.getElementById('modalKasOut').classList.add('hidden')" class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs rounded-xl transition">Batal</button>
+                <button onclick="simpanKasOut()" class="flex-1 py-3 bg-rose-500 hover:bg-rose-600 text-white font-black uppercase tracking-widest text-xs rounded-xl shadow-md transition">Simpan</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Cetak Struk -->
     <div id="modalStruk" class="fixed inset-0 bg-slate-900/95 z-[100] hidden flex flex-col items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-lg max-w-[320px] w-full p-6 shadow-2xl text-slate-800 animate-fade-in text-xs space-y-3 font-mono relative">
@@ -944,8 +1002,10 @@
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, deleteDoc, onSnapshot, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+        // Ganti ID Folder ini jika ingin membuat sistem data yang kosong / baru lagi.
         const appId = 'bebek-emas-pos-v3'; 
 
+        // 👇👇👇 GANTI DENGAN KODE FIREBASE ANDA 👇👇👇
         const firebaseConfig = {
           apiKey: "AIzaSyCRH_6JZoRvKRgbEU_WNNtSOFZ2d83kfys",
           authDomain: "bebek-emas.firebaseapp.com",
@@ -954,6 +1014,7 @@
           messagingSenderId: "50335358089",
           appId: "1:50335358089:web:4cdae41ba35803c5f53a58"
         };
+        // 👆👆👆 ========================================= 👆👆👆
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
@@ -1588,7 +1649,9 @@
                 const repKemarin = closeRegistersDB.find(c => c.tanggal === yesterdayStr); if(repKemarin) tbGlobal.angsulanAwal = repKemarin.angsulanDitinggal || 0;
                 
                 document.getElementById('tbAngsulanAwalText').innerText = formatIDR(tbGlobal.angsulanAwal);
-                document.getElementById('tbTotalCash').innerText = "+ " + formatIDR(tbGlobal.cash); document.getElementById('tbTotalTF').innerText = formatIDR(tbGlobal.tf); document.getElementById('tbTotalOut').innerText = "- " + formatIDR(tbGlobal.out); window.hitungSetoran();
+                document.getElementById('tbTotalCash').innerText = "+ " + formatIDR(tbGlobal.cash); 
+                document.getElementById('tbTotalTF').innerText = "+ " + formatIDR(tbGlobal.tf); 
+                document.getElementById('tbTotalOut').innerText = "- " + formatIDR(tbGlobal.out); window.hitungSetoran();
             }
         };
 
@@ -1642,7 +1705,7 @@
             if(!id) return; showLoading("Menyimpan...");
             try {
                 const tb = closeRegistersDB.find(c => c.id === id);
-                const setoranSistem = (tb.angsulanAwal || 0) + (tb.penjualanCash || 0) - (tb.pengeluaran || 0) - angsulan;
+                const setoranSistem = (tb.angsulanAwal || 0) + (tb.penjualanCash || 0) + (tb.penjualanTf || 0) - (tb.pengeluaran || 0) - angsulan;
                 const selisih = setoran - Math.max(0, setoranSistem);
                 await setDoc(getDocRef('close_registers', id), { setoranCashReal: setoran, angsulanDitinggal: angsulan, selisihSetoran: selisih }, { merge: true });
                 document.getElementById('modalEditTbManager').classList.add('hidden');
@@ -1653,7 +1716,7 @@
 
         window.hitungSetoran = () => { 
             const angsulanBesok = parseFloat(document.getElementById('tbInputAngsulan').value) || 0; 
-            const setoranSistem = tbGlobal.angsulanAwal + tbGlobal.cash - tbGlobal.out - angsulanBesok; 
+            const setoranSistem = tbGlobal.angsulanAwal + tbGlobal.cash + tbGlobal.tf - tbGlobal.out - angsulanBesok; 
             const fisikReal = parseFloat(document.getElementById('tbInputFisik').value);
             
             document.getElementById('tbSetoranCash').innerText = formatIDR(Math.max(0, setoranSistem)); 
@@ -1682,7 +1745,7 @@
             window.showModal("Konfirmasi Tutup Buku", "Pastikan hitungan fisik uang cash Anda sudah sesuai dengan sistem.", async () => { 
                 showLoading("Menyimpan..."); 
                 const angsulanBesok = parseFloat(document.getElementById('tbInputAngsulan').value) || 0; 
-                const setoranSistem = tbGlobal.angsulanAwal + tbGlobal.cash - tbGlobal.out - angsulanBesok; 
+                const setoranSistem = tbGlobal.angsulanAwal + tbGlobal.cash + tbGlobal.tf - tbGlobal.out - angsulanBesok; 
                 const fisikReal = parseFloat(fisikStr) || 0;
                 const selisih = fisikReal - Math.max(0, setoranSistem);
                 
@@ -1740,13 +1803,6 @@
         window.hapusStok = (id) => { window.showModal("Hapus", "Yakin?", async () => { await deleteDoc(getDocRef('stocks', id)); }); };
 
         let mutasiDraftHariIni = [];
-        
-        window.saveDraftMutasi = () => {
-            const tgl = document.getElementById('filterTglMutasi').value;
-            const key = `draftMutasi_${currentUser.role}_${tgl}`;
-            localStorage.setItem(key, JSON.stringify(mutasiDraftHariIni));
-        };
-
         window.loadMutasiDataUI = () => {
             if(currentUser && currentUser.role === 'admin') {
                 document.getElementById('mutasi-staff-view').classList.add('hidden');
@@ -1787,6 +1843,7 @@
                     document.getElementById('mutasiLockedAlert').classList.add('hidden'); 
                 }
 
+                // HITUNG PEMAKAIAN KASIR (Hanya transaksi di hari yang sama)
                 let itemTerjualHariIni = {}; 
                 transactionsDB.filter(t => t.tanggal === tglFilter && t.status === 'Aktif').forEach(t => { 
                     t.cart.forEach(c => { itemTerjualHariIni[c.nama.toLowerCase()] = (itemTerjualHariIni[c.nama.toLowerCase()] || 0) + c.qty; }); 
@@ -1794,14 +1851,6 @@
                 const isToday = (tglFilter === getTodayYMD());
 
                 mutasiDraftHariIni = [];
-                
-                // Ambil draf localStorage jika belum disubmit
-                const draftKey = `draftMutasi_${currentUser.role}_${tglFilter}`;
-                let localDraft = null;
-                if(!isLocked) {
-                    try { localDraft = JSON.parse(localStorage.getItem(draftKey)); } catch(e){}
-                }
-
                 targetStocks.forEach(stokItem => {
                     let potongKasir = 0; if(stokItem.menuTerkait) { const menus = stokItem.menuTerkait.split(',').map(m => m.trim().toLowerCase()); for(let terjual in itemTerjualHariIni) { if(menus.includes(terjual)) potongKasir += itemTerjualHariIni[terjual]; } }
                     
@@ -1811,23 +1860,16 @@
                     if (dataTersimpan) {
                         sisaKemarin = dataTersimpan.sisaKemarin;
                     } else {
+                        // Jika belum disubmit hari ini, sisaKemarin = stokSaatIni + potongKasir (kembalikan stok ke awal hari)
                         sisaKemarin = isToday ? ((parseFloat(stokItem.stokSaatIni) || 0) + potongKasir) : 0;
                     }
                     
-                    let masuk = dataTersimpan ? dataTersimpan.masuk : 0; 
-                    let manual = dataTersimpan ? dataTersimpan.manual : 0; 
-                    let rusak = dataTersimpan ? dataTersimpan.rusak : 0; 
-                    let fisik = dataTersimpan ? (dataTersimpan.fisik !== null ? dataTersimpan.fisik : '') : ''; 
+                    const masuk = dataTersimpan ? dataTersimpan.masuk : 0; const manual = dataTersimpan ? dataTersimpan.manual : 0; const rusak = dataTersimpan ? dataTersimpan.rusak : 0; 
                     
-                    // Timpa dengan draf local jika ada
-                    if(localDraft && !dataTersimpan) {
-                        let dMatch = localDraft.find(d => d.idStok === stokItem.id);
-                        if(dMatch) {
-                            masuk = dMatch.masuk; manual = dMatch.manual; rusak = dMatch.rusak; fisik = dMatch.fisik;
-                        }
-                    }
-
+                    // Seharusnya = (Awal Hari) + (Masuk) - (Terjual di Kasir Hari Ini) - (Pemakaian Manual) - (Rusak)
                     const seharusnya = sisaKemarin + masuk - potongKasir - manual - rusak; 
+                    
+                    const fisik = dataTersimpan ? (dataTersimpan.fisik !== null ? dataTersimpan.fisik : '') : ''; 
                     const selisih = (fisik !== '') ? (fisik - seharusnya) : 0;
                     
                     mutasiDraftHariIni.push({ idStok: stokItem.id, nama: stokItem.nama, satuan: stokItem.satuan, docId: dataTersimpan ? dataTersimpan.id : null, sisaKemarin, masuk, potongKasir, manual, rusak, seharusnya, fisik, selisih, isLocked });
@@ -1837,65 +1879,16 @@
         };
 
         window.renderMutasiTable = () => {
-            const tbl = document.getElementById('tblMutasiStok'); tbl.innerHTML = ''; 
-            document.getElementById('mutasiAlert').classList.add('hidden'); // Sembunyikan alert di awal
-            
+            const tbl = document.getElementById('tblMutasiStok'); tbl.innerHTML = ''; document.getElementById('mutasiAlert').classList.add('hidden');
             mutasiDraftHariIni.forEach((m, idx) => {
-                let selisihColor = "text-slate-400"; if (m.selisih < 0) selisihColor = "text-rose-600 bg-rose-50"; if (m.selisih > 0) selisihColor = "text-emerald-600 bg-emerald-50"; 
-                const dis = m.isLocked ? 'disabled' : ''; 
-                const inputClass = `w-full text-center bg-white border border-slate-200 rounded-lg p-2 font-black outline-none transition shadow-sm text-slate-700 ${m.isLocked ? 'opacity-50' : 'focus:ring-2 focus:ring-blue-400'}`;
-                
-                tbl.innerHTML += `<tr class="hover:bg-slate-50 transition border-b border-slate-50">
-                    <td class="p-2 sm:p-3 pl-3 sm:pl-4 font-black text-slate-800 whitespace-nowrap">${m.nama} <span class="text-[9px] text-slate-400 font-bold uppercase block sm:inline">(${m.satuan})</span></td>
-                    <td class="p-2 sm:p-3 text-center text-slate-400 font-black bg-slate-50 border-l border-slate-100">${m.sisaKemarin}</td>
-                    <td class="p-2 sm:p-3 text-center bg-emerald-50/20"><input type="number" step="any" value="${m.masuk}" oninput="updateMutasiRow(${idx}, 'masuk', this.value)" class="${inputClass}" ${dis}></td>
-                    <td class="p-2 sm:p-3 text-center font-black text-rose-500 bg-rose-50/20">${m.potongKasir}</td>
-                    <td class="p-2 sm:p-3 text-center bg-rose-50/20"><input type="number" step="any" value="${m.manual}" oninput="updateMutasiRow(${idx}, 'manual', this.value)" class="${inputClass}" ${dis}></td>
-                    <td class="p-2 sm:p-3 text-center bg-rose-50/20"><input type="number" step="any" value="${m.rusak}" oninput="updateMutasiRow(${idx}, 'rusak', this.value)" class="${inputClass}" ${dis}></td>
-                    <td class="p-2 sm:p-3 text-center font-black text-blue-700 bg-blue-50/30 text-sm sm:text-base" id="mutasi_shrs_${idx}">${m.seharusnya}</td>
-                    <td class="p-2 sm:p-3 text-center bg-amber-50/50 border-x border-amber-200"><input type="number" step="any" value="${m.fisik}" oninput="updateMutasiRow(${idx}, 'fisik', this.value)" placeholder="Wajib" class="w-full text-center font-black text-amber-700 border-2 border-amber-400 rounded-lg p-2 outline-none transition shadow-sm bg-amber-100/50 placeholder:text-amber-300 ${m.isLocked ? 'opacity-50' : 'focus:ring-2 focus:ring-amber-500'}" ${dis}></td>
-                    <td class="p-2 sm:p-3 text-center font-black text-sm sm:text-lg bg-slate-50 ${selisihColor}" id="mutasi_slsh_${idx}">${m.selisih}</td>
-                </tr>`;
+                let selisihColor = "text-slate-400"; if (m.selisih < 0) selisihColor = "text-rose-600 bg-rose-50"; if (m.selisih > 0) selisihColor = "text-emerald-600 bg-emerald-50"; const dis = m.isLocked ? 'disabled' : ''; const inputClass = `w-full text-center bg-white border border-slate-200 rounded-lg p-2 font-black outline-none transition shadow-sm text-slate-700 ${m.isLocked ? 'opacity-50' : 'focus:ring-2 focus:ring-blue-400'}`;
+                tbl.innerHTML += `<tr class="hover:bg-slate-50 transition border-b border-slate-50"><td class="p-2 sm:p-3 pl-3 sm:pl-4 font-black text-slate-800 whitespace-nowrap">${m.nama} <span class="text-[9px] text-slate-400 font-bold uppercase block sm:inline">(${m.satuan})</span></td><td class="p-2 sm:p-3 text-center text-slate-400 font-black bg-slate-50 border-l border-slate-100">${m.sisaKemarin}</td><td class="p-2 sm:p-3 text-center bg-emerald-50/20"><input type="number" step="any" value="${m.masuk}" oninput="updateMutasiRow(${idx}, 'masuk', this.value)" class="${inputClass}" ${dis}></td><td class="p-2 sm:p-3 text-center font-black text-rose-500 bg-rose-50/20">${m.potongKasir}</td><td class="p-2 sm:p-3 text-center bg-rose-50/20"><input type="number" step="any" value="${m.manual}" oninput="updateMutasiRow(${idx}, 'manual', this.value)" class="${inputClass}" ${dis}></td><td class="p-2 sm:p-3 text-center bg-rose-50/20"><input type="number" step="any" value="${m.rusak}" oninput="updateMutasiRow(${idx}, 'rusak', this.value)" class="${inputClass}" ${dis}></td><td class="p-2 sm:p-3 text-center font-black text-blue-700 bg-blue-50/30 text-sm sm:text-base">${m.seharusnya}</td><td class="p-2 sm:p-3 text-center bg-amber-50/50 border-x border-amber-200"><input type="number" step="any" value="${m.fisik}" oninput="updateMutasiRow(${idx}, 'fisik', this.value)" placeholder="Wajib" class="w-full text-center font-black text-amber-700 border-2 border-amber-400 rounded-lg p-2 outline-none transition shadow-sm bg-amber-100/50 placeholder:text-amber-300 ${m.isLocked ? 'opacity-50' : 'focus:ring-2 focus:ring-amber-500'}" ${dis}></td><td class="p-2 sm:p-3 text-center font-black text-sm sm:text-lg bg-slate-50 ${selisihColor}">${m.selisih}</td></tr>`;
             });
         };
-
-        window.updateMutasiRow = (idx, field, val) => { 
-            const item = mutasiDraftHariIni[idx]; 
-            item[field] = (val === '') ? '' : parseFloat(val.replace(',','.')) || 0; 
-            item.seharusnya = item.sisaKemarin + (item.masuk || 0) - item.potongKasir - (item.manual || 0) - (item.rusak || 0); 
-            item.selisih = (item.fisik !== '') ? (item.fisik - item.seharusnya) : 0; 
-            
-            // UPDATE HANYA CELL TERTENTU (TIDAK ME-REFRESH TABEL AGAR KEYPAD TIDAK TURUN)
-            const elShrs = document.getElementById(`mutasi_shrs_${idx}`);
-            const elSlsh = document.getElementById(`mutasi_slsh_${idx}`);
-            if(elShrs) elShrs.innerText = item.seharusnya;
-            if(elSlsh) {
-                elSlsh.innerText = item.selisih;
-                let c = 'text-slate-400';
-                if(item.selisih < 0) c = 'text-rose-600 bg-rose-50';
-                if(item.selisih > 0) c = 'text-emerald-600 bg-emerald-50';
-                elSlsh.className = `p-2 sm:p-3 text-center font-black text-sm sm:text-lg bg-slate-50 ${c}`;
-            }
-
-            document.getElementById('mutasiAlert').classList.remove('hidden'); 
-            window.saveDraftMutasi(); // Simpan diam-diam ke memori lokal
-        };
-
+        window.updateMutasiRow = (idx, field, val) => { const item = mutasiDraftHariIni[idx]; item[field] = (val === '') ? '' : parseFloat(val) || 0; item.seharusnya = item.sisaKemarin + (item.masuk || 0) - item.potongKasir - (item.manual || 0) - (item.rusak || 0); item.selisih = (item.fisik !== '') ? (item.fisik - item.seharusnya) : 0; document.getElementById('mutasiAlert').classList.remove('hidden'); window.renderMutasiTable(); };
         window.simpanMutasiStok = async () => {
             if(!auth.currentUser) return; if (mutasiDraftHariIni.some(m => m.fisik === '')) return showToast('Semua kolom FISIK (Kuning) WAJIB diisi!', 'error'); const tglFilter = document.getElementById('filterTglMutasi').value; const isToday = (tglFilter === getTodayYMD());
-            window.showModal("Konfirmasi Mutasi", "Data akan disubmit dan tidak dapat diubah lagi hari ini kecuali oleh Manager.", async () => { 
-                showLoading("Menyimpan..."); 
-                for (let m of mutasiDraftHariIni) { 
-                    const payload = { tanggal: tglFilter, timestamp: Date.now(), role: currentUser.role, idStok: m.idStok, namaBarang: m.nama, sisaKemarin: m.sisaKemarin, masuk: m.masuk, potongKasir: m.potongKasir, manual: m.manual, rusak: m.rusak, seharusnya: m.seharusnya, fisik: m.fisik, selisih: m.selisih }; 
-                    if (m.docId) await setDoc(getDocRef('stock_mutations', m.docId), payload, { merge: true }); else await addDoc(getColRef('stock_mutations'), payload); 
-                    if (isToday) await setDoc(getDocRef('stocks', m.idStok), { stokSaatIni: m.fisik }, { merge: true }); 
-                } 
-                
-                // Hapus draft dari localstorage karena sudah sukses disubmit
-                localStorage.removeItem(`draftMutasi_${currentUser.role}_${tglFilter}`);
-
-                hideLoading(); showToast("Berhasil Disimpan!", "success"); setTimeout(() => window.loadMutasiDataUI(), 500); 
-            });
+            window.showModal("Konfirmasi Mutasi", "Data akan disubmit dan tidak dapat diubah lagi hari ini kecuali oleh Manager.", async () => { showLoading("Menyimpan..."); for (let m of mutasiDraftHariIni) { const payload = { tanggal: tglFilter, timestamp: Date.now(), role: currentUser.role, idStok: m.idStok, namaBarang: m.nama, sisaKemarin: m.sisaKemarin, masuk: m.masuk, potongKasir: m.potongKasir, manual: m.manual, rusak: m.rusak, seharusnya: m.seharusnya, fisik: m.fisik, selisih: m.selisih }; if (m.docId) await setDoc(getDocRef('stock_mutations', m.docId), payload, { merge: true }); else await addDoc(getColRef('stock_mutations'), payload); if (isToday) await setDoc(getDocRef('stocks', m.idStok), { stokSaatIni: m.fisik }, { merge: true }); } hideLoading(); showToast("Berhasil Disimpan!", "success"); setTimeout(() => window.loadMutasiDataUI(), 500); });
         };
         
         window.ajukanBukaKunci = async () => {
@@ -1974,7 +1967,7 @@
 
         window.simpanEditMutasiManager = async () => {
             const id = document.getElementById('editMutasiDocId').value;
-            const fisik = parseFloat(document.getElementById('editMutasiFisik').value.replace(',','.'));
+            const fisik = parseFloat(document.getElementById('editMutasiFisik').value);
             if(!id || isNaN(fisik)) return; showLoading("Mengoreksi...");
             try {
                 const mut = mutasiDB.find(m => m.id === id);
