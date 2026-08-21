@@ -12,8 +12,18 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Pawon Nusantara">
     
-    <!-- PWA Manifest dengan Injected Icon untuk Force Standalone di Android -->
-    <link rel="manifest" href="data:application/manifest+json,{&quot;name&quot;:&quot;Pawon Nusantara POS&quot;,&quot;short_name&quot;:&quot;PawonPOS&quot;,&quot;start_url&quot;:&quot;./&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;#f4f5f7&quot;,&quot;theme_color&quot;:&quot;#1A1A1A&quot;,&quot;icons&quot;:[{&quot;src&quot;:&quot;data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjEwMCIgZmlsbD0iIzFhMWExYSIvPjxjaXJjbGUgY3g9IjI1NiIgY3k9IjI1NiIgcj0iMTUwIiBmaWxsPSIjZDRhZjM3Ii8+PC9zdmc+&quot;,&quot;sizes&quot;:&quot;512x512&quot;,&quot;type&quot;:&quot;image/svg+xml&quot;,&quot;purpose&quot;:&quot;any maskable&quot;}]}">
+    <!-- PWA Manifest dengan Injected Icon Bebek Emas untuk Force Standalone di Android -->
+    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22Pawon%20Nusantara%20POS%22%2C%22short_name%22%3A%22PawonPOS%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f4f5f7%22%2C%22theme_color%22%3A%22%231A1A1A%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjExMiIgZmlsbD0iIzFFMjkzQiIvPjxwYXRoIGQ9Ik0zNjYuNSAxNzhjMC0yNi41LTIxLjUtNDgtNDgtNDhzLTQ4IDIxLjUtNDggNDhjMCAxNC41IDYuNSAyNy41IDE2LjUgMzYuNS0yNSAxMi00Ni41IDM1LjUtNTUgNjUuNUgxNjBjLTE2LjUgMC0yNCA4LjUtMjQgMTZzNy41IDE2IDI0IDE2aDIxMi41YzI2LjUgMCA0OC0yMS41IDQ4LTQ4IDAtMzUuNS0yMS41LTYyLTQ5LTc0LjUgOS41LTEwLjUgMTQuNS0yMy41IDE0LjUtMzUuNXoiIGZpbGw9IiNGNTlFMEIiLz48Y2lyY2xlIGN4PSIzMzAiIGN5PSIxNjgiIHI9IjgiIGZpbGw9IiMxRTI5M0IiLz48cGF0aCBkPSJNMzk0LjUgMTY4YzEzIDAgMTcuNSA4LjUgMTcuNSAxM3MtNC41IDEzLTE3LjUgMTNIMzY2di0yNmgyOC41eiIgZmlsbD0iI0VBNTgwQyIvPjwvc3ZnPg%3D%3D%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
+
+    <!-- Script PWA Service Worker (Wajib agar Chrome Android mau install sebagai Aplikasi Layar Penuh) -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            const swCode = "self.addEventListener('install', (e) => self.skipWaiting()); self.addEventListener('activate', (e) => self.clients.claim()); self.addEventListener('fetch', (e) => {});";
+            const blob = new Blob([swCode], {type: 'application/javascript'});
+            const swUrl = URL.createObjectURL(blob);
+            navigator.serviceWorker.register(swUrl).then(() => console.log('Service Worker PWA Aktif')).catch(console.error);
+        }
+    </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -872,13 +882,13 @@
 
         // 👇👇👇 GANTI DENGAN KODE FIREBASE ANDA 👇👇👇
         const firebaseConfig = {
-  apiKey: "AIzaSyCRH_6JZoRvKRgbEU_WNNtSOFZ2d83kfys",
-  authDomain: "bebek-emas.firebaseapp.com",
-  projectId: "bebek-emas",
-  storageBucket: "bebek-emas.firebasestorage.app",
-  messagingSenderId: "50335358089",
-  appId: "1:50335358089:web:4cdae41ba35803c5f53a58"
-};
+          apiKey: "AIzaSyCRH_6JZoRvKRgbEU_WNNtSOFZ2d83kfys",
+          authDomain: "bebek-emas.firebaseapp.com",
+          projectId: "bebek-emas",
+          storageBucket: "bebek-emas.firebasestorage.app",
+          messagingSenderId: "50335358089",
+          appId: "1:50335358089:web:4cdae41ba35803c5f53a58"
+        };
         // 👆👆👆 ========================================= 👆👆👆
 
         const app = initializeApp(firebaseConfig);
@@ -1018,7 +1028,6 @@
             else if (tabName === 'kelolastok') window.renderKelolaStok();
         };
 
-        // --- FITUR DISKON & KASIR ---
         window.openDiscountModal = () => { document.getElementById('inputDiscountVal').value = discountInfo.value || ''; setDiscountType(discountInfo.type); document.getElementById('modalDiskon').classList.remove('hidden'); };
         window.closeDiscountModal = () => document.getElementById('modalDiskon').classList.add('hidden');
         window.setDiscountType = (type) => { discountInfo.type = type; document.getElementById('btnDiscPercent').className = type === '%' ? 'flex-1 py-2 rounded-lg text-xs font-black bg-white shadow-sm text-rose-600 transition' : 'flex-1 py-2 rounded-lg text-xs font-black text-slate-500 hover:text-slate-700 transition'; document.getElementById('btnDiscNominal').className = type === 'Rp' ? 'flex-1 py-2 rounded-lg text-xs font-black bg-white shadow-sm text-rose-600 transition' : 'flex-1 py-2 rounded-lg text-xs font-black text-slate-500 hover:text-slate-700 transition'; };
@@ -1781,4 +1790,3 @@
     </script>
 </body>
 </html>
-```eof
