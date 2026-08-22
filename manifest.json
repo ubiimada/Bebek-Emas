@@ -7,9 +7,9 @@
 "theme_color": "#1A1A1A",
 "icons": [
 {
-"src": "https://raw.githubusercontent.com/google/material-design-icons/master/png/action/shopping_cart/materialicons/512dpi/1/baseline_shopping_cart_black_48dp.png",
+"src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjEwMCIgZmlsbD0iIzFhMWExYSIvPjxjaXJjbGUgY3g9IjI1NiIgY3k9IjI1NiIgcj0iMTUwIiBmaWxsPSIjZDRhZjM3Ii8+PHBhdGggZD0iTTM2OS4zIDExMS40Yy0xOS40LTE5LjQtNTAuOS0xOS40LTcwLjMgMEwxMDkuOSAzMDAuNWMtOSA5LTE0LjcgMjAuOC0xNi41IDMzLjRsLTExLjYgODEuM2MtMi40IDE2LjUgMTEgMzAgMjcuNSAyNy41bDgxLjMtMTEuNmMxMi43LTEuOCAyNC40LTcuNSAzMy40LTE2LjVsMTg5LjEtMTg5LjFjMTkuNC0xOS40IDE5LjQtNTAuOSAwLTcwLjNsLTQzLjgtNDMuOHptLTU0LjggNTQuOGwtMTU5IDE1OS0yNS4yIDMuNiAzLjYtMjUuMiAxNTktMTU5IDIxLjYgMjEuNnoiIGZpbGw9IiMxYTFhMWEiLz48L3N2Zz4=",
 "sizes": "512x512",
-"type": "image/png",
+"type": "image/svg+xml",
 "purpose": "any maskable"
 }
 ]
