@@ -1,0 +1,16 @@
+{
+"name": "Pawon Nusantara POS",
+"short_name": "PawonPOS",
+"start_url": "./index.html",
+"display": "standalone",
+"background_color": "#f4f5f7",
+"theme_color": "#1A1A1A",
+"icons": [
+{
+"src": "https://raw.githubusercontent.com/google/material-design-icons/master/png/action/shopping_cart/materialicons/512dpi/1/baseline_shopping_cart_black_48dp.png",
+"sizes": "512x512",
+"type": "image/png",
+"purpose": "any maskable"
+}
+]
+}
