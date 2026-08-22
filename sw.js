@@ -6,7 +6,10 @@ self.addEventListener('activate', (e) => {
     self.clients.claim();
 });
 
-// Wajib ada fetch listener agar Chrome mengizinkan fitur "Install/Add to Home Screen"
+// Fetch listener diperlukan oleh Chrome untuk memicu PWA Install Prompt
 self.addEventListener('fetch', (e) => {
-    // Kosong tidak masalah, yang penting terdeteksi oleh Chrome
+    // Pass-through fetch (tidak ada caching offline yang rumit agar data selalu real-time)
+    e.respondWith(fetch(e.request).catch(() => {
+        return new Response("Aplikasi sedang offline. Harap periksa koneksi internet Anda.");
+    }));
 });
